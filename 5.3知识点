@@ -1,0 +1,7 @@
+selenium问题：
+import sys
+print (sys.path)能够查看当前python的安装路径，
+将chromdriver下载后直接放到这个路径下就可以不用写绝对路径了 
+谷歌下载图片问题：
+1.可以使用谷歌插件图片助手
+2.匹配xpath  //div[@jsname=...]具体值忘记，然后在sublime里面处理链接即可
