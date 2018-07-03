@@ -34,18 +34,20 @@ class TwitterPip (MysqlDB):
             print(e)
             print("执行sql语句失败")
             return "error"
-    def insert_tweetInfo(self, itemDict):
+    def insert_tweetInfo(self, itemDict, flag):
         sql = """
             INSERT INTO tweets (accountId, tweetsText, tweetsUrl, videoUrl, imageUrl, retweetCount,
-                                tweetFavCount, tweetTime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                tweetFavCount, tweetTime, twitterId) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         try:
             self.cursor.execute(sql, (itemDict["accountId"], itemDict["tweetsText"],
                                     itemDict["tweetsUrl"], itemDict["videoUrl"],
                                     itemDict["imageUrl"], itemDict["retweetCount"],
-                                    itemDict["favoriteCount"], itemDict["tweetTime"],))
+                                    itemDict["favoriteCount"], itemDict["tweetTime"], itemDict["twitterId"]))
             self.conn.commit()
             print("执行sql语句成功")
+            flag += 1
+            return  flag
         except Exception as e:
             self.conn.rollback()
             print(e)
@@ -74,12 +76,12 @@ class TwitterPip (MysqlDB):
             print(e)
             print("执行sql语句失败")
             return "error"
-    #处理idList数据
-    def do(self, idList):
-        twitterIdlist = []
-        for item in idList:
-            twitterIdlist.append(item["twitterId"])
-        return twitterIdlist
+    # #处理idList数据
+    # def do(self, idList):
+    #     twitterIdlist = []
+    #     for item in idList:
+    #         twitterIdlist.append(item["twitterId"])
+    #     return twitterIdlist
     #获取twitterId的列表
     def get_twitterIdList(self):
         sql = "select twitterId from account"
@@ -101,13 +103,27 @@ class TwitterPip (MysqlDB):
         try:
             self.cursor.execute(sql)
             accountId = self.cursor.fetchone()
-            return accountId
+            return accountId[0]
         except Exception as e:
             self.conn.rollback()
             print(e)
             print("执行sql语句失败")
             return "error"
 
+    #获取最近插入的Id
+    def get_sinceId(self, accountId):
+        sql = "SELECT tweets.twitterId from tweets where accountId=%s ORDER BY tweets.tweetsId desc LIMIT 1"%accountId
+        try:
+            self.cursor.execute(sql)
+            sinceId = self.cursor.fetchone()
+            if sinceId != None:
+                return sinceId[0]
+            else:
+                return None
+        except Exception as e:
+            self.conn.rollback()
+            print("执行sql语句失败", e)
+            return None
 
         
 

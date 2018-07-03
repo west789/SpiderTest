@@ -1,6 +1,7 @@
 #导入tweepy  
 import tweepy  
 from saveData import TwitterPip
+import re
 
 #填写twitter提供的开发Key和secret  
 consumer_key = '8Iy4wqdi99Zte6xwmFg0Z7ub6'  
@@ -20,9 +21,12 @@ api = tweepy.API(auth,wait_on_rate_limit=True)  #tweepy初始化中添加此选�
 # 打印其他用户主页上的内容，其中""里面的是用户昵称即@后面的名字
 # for item in tweepy.Cursor(api.user_timeline, id="GoogleAI").items(200):
 #     print (item)
-# public_tweets = api.user_timeline("GoogleAI",count=200) 
-public_tweets = api.get_user("GoogleAI")
-print(public_tweets)
+# public_tweets = api.user_timeline("HBO",since_id=1013864067537227778)
+# public_tweets.reverse()
+# for item in public_tweets:
+#     print(item.text)
+# public_tweets = api.get_user("GoogleAI")
+# print(public_tweets)
 # public_tweets = api.me()
 def get_imgvideoUrl(public_tweets):
     if hasattr(public_tweets, public_tweets.extended_entities):
@@ -36,10 +40,15 @@ def get_imgvideoUrl(public_tweets):
     else:
         return ("", "")
 
-# public_tweets = api.get_status(1009542656542715904) #查看具体推文的状态
+public_tweets = api.get_status(1013527664320081920) #查看具体推文的状态
 # imgvideoUrl = get_imgvideoUrl(public_tweets)
 tweetsText = public_tweets.text
-print  (tweetsText)
+#替换emogi表情
+# highPoints = re.compile("[^\\uD800-\\uDBFF][\\uDC00-\\uDFFF]")
+highPoints = re.compile(r"[\uD800-\uDFFF]")
+
+tweetsText1 = highPoints.sub("", tweetsText)
+print  (tweetsText1)
 tweetsUrl = "https://twitter.com/%s/status/%d"%(public_tweets.user.screen_name, public_tweets.id)
 imageUrl = public_tweets.entities["media"][0]["media_url"]
 
