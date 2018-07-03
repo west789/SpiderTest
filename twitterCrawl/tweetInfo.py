@@ -30,7 +30,7 @@ def getTweetsUser(api,username,twitterPip):
         userInfoDict["url"] = url
         userInfoDict["profileImage"] = profileImage
         userInfoDict["statusesCount"] = statusesCount
-        userInfoDict["friendsCount"] = 528
+        userInfoDict["friendsCount"] = friendsCount
         userInfoDict["followersCount"] = followersCount
         userInfoDict["favoritesCount"] = favoritesCount
         userInfoDict["accountTime"] = accountTime
