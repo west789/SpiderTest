@@ -14,7 +14,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)  
 
 #获取类似于内容句柄的东西  
-api = tweepy.API(auth,wait_on_rate_limit=True)  #tweepy初始化中添加此选项，以便在达到速率限制时等待而不是失败
+api = tweepy.API(auth, wait_on_rate_limit=True, proxy="127.0.0.1:1080")  #tweepy初始化中添加此选项，以便在达到速率限制时等待而不是失败
   
 #打印我自己主页上的时间轴里的内容  
 # public_tweets = api.home_timeline() 
@@ -42,15 +42,17 @@ def get_imgvideoUrl(public_tweets):
 
 public_tweets = api.get_status(1013527664320081920) #查看具体推文的状态
 # imgvideoUrl = get_imgvideoUrl(public_tweets)
-tweetsText = public_tweets.text
+
+# tweetsText = public_tweets.text
+tweetsText = "app 📲https://t.co/Xgo5kjIt8c"
 #替换emogi表情
 # highPoints = re.compile("[^\\uD800-\\uDBFF][\\uDC00-\\uDFFF]")
 highPoints = re.compile(r"[\uD800-\uDFFF]")
 
 tweetsText1 = highPoints.sub("", tweetsText)
 print  (tweetsText1)
-tweetsUrl = "https://twitter.com/%s/status/%d"%(public_tweets.user.screen_name, public_tweets.id)
-imageUrl = public_tweets.entities["media"][0]["media_url"]
+# tweetsUrl = "https://twitter.com/%s/status/%d"%(public_tweets.user.screen_name, public_tweets.id)
+# imageUrl = public_tweets.entities["media"][0]["media_url"]
 
 # videoUrl = imgvideoUrl[0]
 # imageUrl = imgvideoUrl[1]

@@ -1,40 +1,43 @@
 import requests
 import os
+import aiohttp
+import asyncio
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36"}
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36"}
 basePath = os.path.join(os.getcwd(), "twitterCrawl")
 
-#创建目录
+# 创建目录
+
+
 def mkdirThreeFiles():
     if not os.path.exists(basePath+"/videos"):
-            os.mkdir(basePath+"/videos")
+        os.mkdir(basePath+"/videos")
     if not os.path.exists(basePath + "/images"):
-            os.makedirs(os.path.join(basePath+"/images", 'headImg'))
-            os.makedirs(os.path.join(basePath+"/images", 'tweetImg'))
-#下载视频
+        os.makedirs(os.path.join(basePath+"/images", 'headImg'))
+        os.makedirs(os.path.join(basePath+"/images", 'tweetImg'))
+# 下载视频
+
+
 def downloadVideo(videoUrl):
     try:
         videoUrl = videoUrl.split("?")[0]
-        # if not os.path.exists(basePath+"/videos"):
-        #     os.mkdir(basePath+"/videos")
         baseVideoPath = os.path.join(basePath, "videos")
         videoName = os.path.basename(videoUrl)
-        response =  requests.get(videoUrl, headers=headers)
+        response = requests.get(videoUrl, headers=headers)
         videoContent = response.content
-        with open(baseVideoPath+"/%s"%videoName, "wb") as f:
+        with open(baseVideoPath+"/%s" % videoName, "wb") as f:
             f.write(videoContent)
-        # videoPath = os.path.join(baseVideoPath, videoName)
         return videoName
     except Exception as e:
         print(e)
         return ""
 
+# 下载推文照片
+
+
 def downloadImg(imgUrl):
     try:
-        # if not os.path.exists(basePath + "/images"):
-        #     os.mkdir(basePath + "/images")
-        #     if not os.path.exists(basePath + '/images/tweetImg'):
-        #         os.mkdir(basePath + '/images/tweetImg')
         imgName = os.path.basename(imgUrl)
         response = requests.get(imgUrl, headers=headers)
         imgContent = response.content
@@ -46,6 +49,9 @@ def downloadImg(imgUrl):
         print(e)
         return ""
 
+# 下载头像图片
+
+
 def downloadHead(profileImgUrl):
     try:
         if not os.path.exists(basePath + "/images"):
@@ -54,14 +60,9 @@ def downloadHead(profileImgUrl):
                 os.mkdir(basePath + '/images/headImg')
         profileImgName = os.path.basename(profileImgUrl)
         response = requests.get(profileImgUrl, headers=headers)
-        with open(basePath + '/images/headImg/%s'% profileImgName, 'wb') as f:
+        with open(basePath + '/images/headImg/%s' % profileImgName, 'wb') as f:
             f.write(response.content)
         return profileImgName
     except Exception as e:
         print(e)
         return ""
-# if __name__ == '__main__':
-#     path = os.getcwd()
-#     print(path)
-#     # downloadImg("http://pbs.twimg.com/media/Dgt3WaGV4AEzGny.jpg")
-#     downloadVideo("https://video.twimg.com/amplify_video/1012022754457948160/vid/720x720/3SE7Lcd4A3FfvKW1.mp4?tag=3")
