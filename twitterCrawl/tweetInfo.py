@@ -8,6 +8,7 @@ import asyncio
 def getTweetsUser(api, username, twitterPip):
     try:
         idList = twitterPip.get_twitterIdList()
+        screenNameList = twitterPip.get_screenName()
         mkdirThreeFiles()
         userInfoDict = {}
         tweetInfoDict = {}
@@ -37,10 +38,14 @@ def getTweetsUser(api, username, twitterPip):
         userInfoDict["favoritesCount"] = favoritesCount
         userInfoDict["accountTime"] = accountTime
         # 插入数据库
-        if idList != None and str(twitterId) in idList:
-            twitterPip.update_userInfo(userInfoDict, twitterId)
-        elif idList == None or len(idList) == 0 or (idList != None and str(twitterId) not in idList):
+        if screenNameList != None and screenName in screenNameList:
+            twitterPip.update_userInfo(userInfoDict, screenName)
+        elif screenNameList == None or len(screenNameList) == 0 or (screenNameList != None and screenName not in idList):
             twitterPip.insert_userInfo(userInfoDict)
+        # if idList != None and str(twitterId) in idList:
+        #     twitterPip.update_userInfo(userInfoDict, twitterId)
+        # elif idList == None or len(idList) == 0 or (idList != None and str(twitterId) not in idList):
+        #     twitterPip.insert_userInfo(userInfoDict)
         
         # 获取当前账户下的推文
         accountId = twitterPip.get_accountId(userInfo.status.id)

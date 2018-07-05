@@ -56,14 +56,14 @@ class TwitterPip (MysqlDB):
             print("插入推文信息失败")
             return "error"
 
-    def update_userInfo(self, itemDict, twitterId):
+    def update_userInfo(self, itemDict, screenName):
         sql = """
             update account set accountName=%s, screenName=%s,
                                twitterId=%s, location=%s,
                                description=%s, url=%s,
                                statusesCount=%s, friendsCount=%s,
                                followersCount=%s, favoritesCount=%s,
-                               accountTime=%s, profileImage=%s where twitterId=%s
+                               accountTime=%s, profileImage=%s where screenName=%s
                 """
         try:
             self.cursor.execute(sql, (itemDict["accountName"], itemDict["screenName"],
@@ -71,7 +71,7 @@ class TwitterPip (MysqlDB):
                                       itemDict["description"], itemDict["url"],
                                       itemDict["statusesCount"], itemDict["friendsCount"],
                                       itemDict["followersCount"], itemDict["favoritesCount"],
-                                      itemDict["accountTime"], itemDict["profileImage"], twitterId))
+                                      itemDict["accountTime"], itemDict["profileImage"], itemDict["screenName"]))
             self.conn.commit()
             print("更新 %s 账户信息成功"%itemDict["screenName"])
         except Exception as e:
@@ -95,6 +95,19 @@ class TwitterPip (MysqlDB):
             print("执行sql语句失败")
             return "error"
 
+    #获取screenName列表
+    def get_screenName(self):
+        sql = "SELECT screenName FROM account"
+        try:
+            self.cursor.execute(sql)
+            nameTuple = self.cursor.fetchall()
+            nameList = [item[0] for item in nameTuple]
+            return nameList
+        except Exception as e:
+            self.conn.rollback()
+            print(e)
+            print("执行sql语句失败")
+            return "error"
     # 获取accountId
     def get_accountId(self, twitterId):
         sql = "select accountId from account where twitterId =%s" % twitterId

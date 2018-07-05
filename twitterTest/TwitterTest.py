@@ -25,7 +25,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True, proxy="127.0.0.1:1080")  #tweepy
 # public_tweets.reverse()
 # for item in public_tweets:
 #     print(item.text)
-# public_tweets = api.get_user("GoogleAI")
+public_tweets = api.get_user("CNN")
 # print(public_tweets)
 # public_tweets = api.me()
 def get_imgvideoUrl(public_tweets):

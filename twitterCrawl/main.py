@@ -20,7 +20,9 @@ def main():
 
 if __name__ == '__main__':
     starTime = datetime.now()
-    print("程序开始运行------------")
+    print("程序开始运行")
+    print("---------------")
     main()
     endTime = datetime.now()
+    print("---------------")
     print("程序执行完毕，共耗时%s"%(endTime-starTime))

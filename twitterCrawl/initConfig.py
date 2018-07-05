@@ -4,7 +4,7 @@ import json
 
 #初始化访问twitter的API配置的key
 def init():
-    with open("twitterCrawl/config.json", 'r') as f:
+    with open("./config.json", 'r') as f:
         data = json.load(f)
         keyData = data.get("twitterKey")
         userList = data.get("userList")
