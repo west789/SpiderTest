@@ -21,4 +21,4 @@ def timeFun(sched_timedo):
 if __name__ == "__main__":
     sched_timedo = datetime.datetime(2018, 7, 17, 14, 39, 10)
     print(f"执行Timer{sched_timedo}")
-    timeFun(sched_timedo)
+    timeFun(sched_timedo)       
