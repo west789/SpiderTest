@@ -40,7 +40,7 @@ def get_imgvideoUrl(public_tweets):
     else:
         return ("", "")
 
-public_tweets = api.get_status(1013527664320081920) #查看具体推文的状态
+public_tweets = api.get_status(1027056874057859072) #查看具体推文的状态
 # imgvideoUrl = get_imgvideoUrl(public_tweets)
 
 # tweetsText = public_tweets.text
