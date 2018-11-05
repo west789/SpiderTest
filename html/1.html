@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盒子的真实尺寸</title>
+    <style type="text/css">
+        /* .box01{width:50px;height:50px;background-color:gold;margin: 30px auto;} */
+        .parent{overflow: hidden;}
+        .box02{ margin-bottom: 30px;border: black 2px solid;text-align: center}
+        .box03{margin-top: 60px;border: black 2px solid; text-align: center}
+        .box04{width: 200px;}
+        /* div{border: red 3px solid} */
+        span{
+            border:1px solid gold;
+            /* margin: 10px auto; */
+            /* padding: 20px ; */
+            line-height: 50px;
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            color: red;
+            font:  16px "Microsoft Yahei" ;}
+    </style>
+</head>
+<body>
+    <!-- <div class="box01">1</div> -->
+    <br />
+    <div class="parent">
+        <div class="box02">2</div>
+    </div>
+    
+    <!-- <br /> -->
+    <div class="box03">3</div>
+    <div class="box04">
+        <span class="inline">首页</span><span>公司简介</span>
+    </div>
+</body>
+</html>
